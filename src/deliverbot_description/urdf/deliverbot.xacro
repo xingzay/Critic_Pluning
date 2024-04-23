@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com)
+     Commit Version: 1.5.1-0-g916b5db  Build Version: 1.5.7152.31018
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="deliverbot_description" xmlns:xacro="http://ros.org/wiki/xacro">
+
+
+  <!-- Enable setting arguments from the launch file -->
+  <xacro:arg name="robot_namespace" default="/" />
+  <xacro:arg name="use_fake_hardware" default="true" />
+  <xacro:arg name="laser_xyz" default="$(optenv DELIVERBOT_LMS1XX_XYZ 0.0830 0.0 0.12635)" />
+  <xacro:arg name="laser_rpy" default="$(optenv DELIVERBOT_LMS1XX_RPY 0.0 0.0 0.0)" />
+  <xacro:arg name="sensor_arch_mount" default="$(optenv DELIVERBOT_CAMERA_MOUNT_FRAME Industrial_computer_link)" />
+  <xacro:arg name="astra_xyz" default="$(optenv DELIVERBOT_ASTRA_XYZ -0.127 0 0.37935)" />
+  <xacro:arg name="astra_rpy" default="$(optenv DELIVERBOT_ASTRA_RPY 0 0 -3.14)" />
+
+
+  <xacro:include filename="$(find deliverbot_description)/urdf/deliverbot.urdf.xacro" />
+
+  <!-- Import all Gazebo-customization elements, including Gazebo colors -->
+  <xacro:include filename="$(find deliverbot_description)/urdf/deliverbot.gazebo.xacro" />
+
+  <!-- Import Rviz colors -->
+  <xacro:include filename="$(find deliverbot_description)/urdf/deliverbot.materials.xacro" />
+
+  <!-- Import deliverbot ros2_control description -->
+  <xacro:include filename="$(find deliverbot_description)/urdf/deliverbot_system.ros2_control.xacro" />
+
+  <xacro:include filename="$(find deliverbot_description)/urdf/Industrial_computer.urdf.xacro" />
+
+  <xacro:include filename="$(find deliverbot_description)/urdf/astra2.urdf.xacro" />
+
+  <xacro:include filename="$(find deliverbot_description)/urdf/laser_mount.urdf.xacro" />
+
+  <xacro:include filename="$(find deliverbot_description)/urdf/laser.urdf.xacro" />
+
+  <xacro:include filename="$(find deliverbot_description)/urdf/imu.urdf.xacro" />
+
+  <xacro:deliverbot/>
+  <xacro:deliverbot_gazebo/>
+  <xacro:deliverbot_system name="DeliverBotSystem"/>
+
+  <xacro:sensor_astra parent="$(arg sensor_arch_mount)"/>
+  <!-- <xacro:Industrial_computer computer_x ="1.0" computer_y = "1" computer_z = "1"/> -->
+  <!-- <joint name="laser_mount_joint" type="fixed">
+    <origin xyz="$(arg laser_xyz)" rpy="$(arg laser_rpy)" />
+    <parent link="base_link" />
+    <child link="base_laser_mount" />
+  </joint> -->
+
+</robot>

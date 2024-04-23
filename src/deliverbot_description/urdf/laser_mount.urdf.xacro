@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="laser_mount">
+
+  <xacro:macro name="laser_mount" params="laser_mount_name laser_mount_x laser_mount_y laser_mount_z">
+
+        <!-- Spawn the sensor arch link -->
+        <link name="${laser_mount_name}_laser_mount_link">
+             <origin xyz="0 0 0" rpy="0 0 0"/>
+             <visual>
+                 <geometry>
+                     <box size="0.01 0.01 0.2"/>
+                 </geometry>
+                 <material name="black">
+                    <color rgba="1.0 1.0 1.0 0.0"/>
+                 </material>
+             </visual>
+             <collision>
+                 <origin xyz="0 0 0" rpy="0 0 0"/>
+                 <geometry>
+                        <box size="0.01 0.01 0.2"/>
+                    </geometry>
+             </collision>
+        </link>
+
+        <!-- Attach the sensor arch to the top plate -->
+        <joint name="${laser_mount_name}_laser_mount_joint" type="fixed">
+             <parent link="base_link"/>
+             <child link="${laser_mount_name}_laser_mount_link"/>
+             <origin xyz="${laser_mount_x} ${laser_mount_y} ${laser_mount_z}"
+             rpy="0 0 0"/>
+        </joint>
+
+        <gazebo reference="${laser_mount_name}_laser_mount_link">
+            <material>Gazebo/Black</material>
+          </gazebo>
+
+    </xacro:macro>
+
+    <xacro:macro name="laser_platform" params="laser_platform_x laser_platform_y laser_platform_z">
+
+    <!-- Spawn the sensor arch link -->
+    <link name="laser_platform_link">
+         <origin xyz="0 0 0" rpy="0 0 0"/>
+         <visual>
+             <geometry>
+                 <box size="0.2 0.2 0.01"/>
+             </geometry>
+             <material name="black">
+                <color rgba="1.0 1.0 1.0 0.0"/>
+             </material>
+         </visual>
+         <collision>
+             <origin xyz="0 0 0" rpy="0 0 0"/>
+             <geometry>
+                    <box size="0.2 0.2 0.01"/>
+                </geometry>
+         </collision>
+    </link>
+
+    <!-- Attach the sensor arch to the top plate -->
+    <joint name="laser_platform_joint" type="fixed">
+         <parent link="la_laser_mount_link"/>
+         <child link="laser_platform_link"/>
+         <origin xyz="${laser_platform_x} ${laser_platform_y} ${laser_platform_z}"
+         rpy="0 0 0"/>
+    </joint>
+
+    <gazebo reference="laser_platform_link">
+        <material>Gazebo/Black</material>
+      </gazebo>
+</xacro:macro>
+
+    <xacro:laser_mount laser_mount_name = "la" laser_mount_x="0.09" laser_mount_y="0.09" laser_mount_z="0.22" />
+    <xacro:laser_mount laser_mount_name = "lb" laser_mount_x="0.09" laser_mount_y="-0.09" laser_mount_z="0.22" />
+    <xacro:laser_mount laser_mount_name = "ra" laser_mount_x="-0.09" laser_mount_y="-0.09" laser_mount_z="0.22" />
+    <xacro:laser_mount laser_mount_name = "rb" laser_mount_x="-0.09" laser_mount_y="0.09" laser_mount_z="0.22" />
+    <xacro:laser_platform laser_platform_x ="-0.09" laser_platform_y="-0.09" laser_platform_z="0.1" />
+</robot>
