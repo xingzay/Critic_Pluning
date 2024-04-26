@@ -1,26 +1,3 @@
-// Copyright (c) 2018 Intel Corporation
-// Copyright (c) 2018 Simbe Robotics
-// Copyright (c) 2019 Samsung Research America
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
-// Navigation Strategy based on:
-// Brock, O. and Oussama K. (1999). High-Speed Navigation Using
-// the Global Dynamic Window Approach. IEEE.
-// https://cs.stanford.edu/group/manips/publications/pdfs/Brock_1999_ICRA.pdf
-
-// #define BENCHMARK_TESTING
-
 #include "nav2_navfn_planner/navfn_planner.hpp"
 
 #include <chrono>
@@ -380,7 +357,7 @@ double bernstein(int n, int i, double t) {
 }
 // 贝塞尔曲线优化全局路径
 void NavfnPlanner::optimizePathWithBezier(const nav_msgs::msg::Path & original_path, nav_msgs::msg::Path & optimized_path){
-  int num_samples = 100;
+  int num_samples = 50;
     // 清空优化后的路径
     optimized_path.poses.clear();
     optimized_path.header = original_path.header;
@@ -388,15 +365,16 @@ void NavfnPlanner::optimizePathWithBezier(const nav_msgs::msg::Path & original_p
     std::vector<geometry_msgs::msg::PoseStamped> control_points = original_path.poses;
     // 获取控制点的数量
     int n = control_points.size() - 1;
-    // 为贝塞尔曲线生成采样点
+    // 为贝塞尔曲线生成采样点，采样间隔为0.2
     for (int sample = 0; sample <= num_samples; ++sample) {
         double t = static_cast<double>(sample) / num_samples;
         geometry_msgs::msg::PoseStamped new_pose;
         double x = 0.0;
         double y = 0.0;
-        // 计算贝塞尔曲线的位置
+        // 贝塞尔曲线计算公式
         for (int i = 0; i <= n; ++i) {
           double coef = bernstein(n, i, t);
+         // 乘上控制点坐标
           x += coef * control_points[i].pose.position.x;
           y += coef * control_points[i].pose.position.y;
         }
