@@ -1,2 +1,3 @@
-nav2_dwb_critics
-dwb评估插件
+dwb_critic_pluing
+A* -- 贝塞尔曲线优化
+turtlebot3 仿真
