@@ -13,6 +13,7 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(nav_msgs REQUIRED)
 find_package(QT NAMES Qt6 COMPONENTS Core Quick Positioning Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick Positioning Widgets REQUIRED)
 file(GLOB PRO_SOURCE_DIR RELATIVE ${CMAKE_SOURCE_DIR} FOLLOW_SYMLINKS  src/*.cpp)
@@ -40,7 +41,7 @@ add_executable(${PROJECT_NAME}
     ${QT_MOC_HPP}
     # ${QT_RESOUCE_HPP}
   )
-ament_target_dependencies(${PROJECT_NAME} rclcpp geometry_msgs std_msgs)
+ament_target_dependencies(${PROJECT_NAME} rclcpp geometry_msgs std_msgs nav_msgs)
 
 target_link_libraries(${PROJECT_NAME} Qt${QT_VERSION_MAJOR}::Widgets)
 
