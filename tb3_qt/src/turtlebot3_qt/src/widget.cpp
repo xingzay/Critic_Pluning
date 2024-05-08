@@ -35,7 +35,6 @@ Widget::Widget(QWidget *parent)
         std::bind(&Widget::heartbeat_callback,this,std::placeholders::_1)
     );
 
-
     //多线程运行spin
     spin_thread = std::thread([this]() {
         rclcpp::spin(node);
