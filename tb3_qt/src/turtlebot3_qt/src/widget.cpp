@@ -4,13 +4,14 @@
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Widget),
-    mutex_()
+    mutex_(),
+    last_heartbeat_(rclcpp::Clock().now())
 {
     ui->setupUi(this);
 
-    // 将check_tb3_node_label设置为圆形
+    // 将check_tb3_node_label设置为圆形,默认颜色为红色
     ui->check_tb3_node_label->setFixedSize(21, 21);
-    ui->check_tb3_node_label->setStyleSheet("border-radius: 50px;");
+    ui->check_tb3_node_label->setStyleSheet("border-radius: 50px; background-color: red;");
 
     int argc = 0; char **argv = NULL;
     rclcpp::init(argc, argv);
@@ -35,6 +36,13 @@ Widget::Widget(QWidget *parent)
         std::bind(&Widget::heartbeat_callback,this,std::placeholders::_1)
     );
 
+    // 创建定时器，用于检查心跳信号是否超时
+    timer_ = new QTimer(this);
+    connect(timer_, &QTimer::timeout, this, &Widget::check_heartbeat);
+    timer_->start(2000);  // 每2秒检查一次  时间短计算量大
+
+
+
     //多线程运行spin
     spin_thread = std::thread([this]() {
         rclcpp::spin(node);
@@ -44,8 +52,6 @@ Widget::Widget(QWidget *parent)
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &Widget::update_time);
     timer->start(1000);
-
-    // rclcpp::shutdown();
 }
 
 Widget::~Widget()
@@ -55,6 +61,9 @@ Widget::~Widget()
         spin_thread.join();
     }
 
+    if (timer_) {
+        timer_->stop();  // 停止定时器
+    }
 
     delete ui;
 }
@@ -96,15 +105,24 @@ void Widget::odom_callback(const nav_msgs::msg::Odometry::SharedPtr odom){
 }
 
 void Widget::heartbeat_callback(const std_msgs::msg::Empty &) {
-
     std::unique_lock<std::mutex> lock(mutex_); // 确保互斥
+    last_heartbeat_ = rclcpp::Clock().now();  // 更新心跳时间
+    // 收到心跳信号后，将颜色更改为绿色
+    QMetaObject::invokeMethod(
+        this,
+        [this]() {
+            ui->check_tb3_node_label->setStyleSheet("background-color: green;");
+        },
+        Qt::AutoConnection
+        );
+}
 
-    last_heartbeat_ = node->now();  // 更新上次心跳的时间
+void Widget::check_heartbeat() {
+    std::lock_guard<std::mutex> lock(mutex_);  // 确保线程安全
+    auto time_diff = (rclcpp::Clock().now() - last_heartbeat_).seconds();
 
-    auto time_diff = (node->now() - last_heartbeat_).seconds();
-
-    if (time_diff > 3) {
-        // 如果超过3秒没有收到心跳信号,显示红色
+    if (time_diff > 3) {  // 如果超过3秒没有收到心跳信号
+        // 将颜色设为红色
         QMetaObject::invokeMethod(
             this,
             [this]() {
@@ -112,18 +130,8 @@ void Widget::heartbeat_callback(const std_msgs::msg::Empty &) {
             },
             Qt::AutoConnection
             );
-    } else {
-        // 收到显示绿色
-        QMetaObject::invokeMethod(
-            this,
-            [this]() {
-                ui->check_tb3_node_label->setStyleSheet("background-color: green;");
-            },
-            Qt::AutoConnection
-            );
     }
 }
-
 
 
 
