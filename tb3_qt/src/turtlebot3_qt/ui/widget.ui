@@ -37,9 +37,9 @@
   <widget class="QTextEdit" name="linear_textEdit">
    <property name="geometry">
     <rect>
-     <x>190</x>
+     <x>160</x>
      <y>230</y>
-     <width>141</width>
+     <width>181</width>
      <height>41</height>
     </rect>
    </property>
@@ -83,9 +83,9 @@ li.checked::marker { content: &quot;\2612&quot;; }
   <widget class="QTextEdit" name="angular_textEdit">
    <property name="geometry">
     <rect>
-     <x>190</x>
+     <x>160</x>
      <y>300</y>
-     <width>141</width>
+     <width>181</width>
      <height>41</height>
     </rect>
    </property>
@@ -130,7 +130,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <property name="geometry">
     <rect>
      <x>370</x>
-     <y>380</y>
+     <y>370</y>
      <width>201</width>
      <height>51</height>
     </rect>
@@ -150,9 +150,9 @@ li.checked::marker { content: &quot;\2612&quot;; }
   <widget class="QTextEdit" name="route_textEdit">
    <property name="geometry">
     <rect>
-     <x>180</x>
-     <y>390</y>
-     <width>161</width>
+     <x>160</x>
+     <y>380</y>
+     <width>181</width>
      <height>41</height>
     </rect>
    </property>
@@ -170,6 +170,52 @@ li.unchecked::marker { content: &quot;\2610&quot;; }
 li.checked::marker { content: &quot;\2612&quot;; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:15pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt;当前行进距离:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="check_tb3_node_label">
+   <property name="geometry">
+    <rect>
+     <x>460</x>
+     <y>160</y>
+     <width>21</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>15</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="check_tb3_textEdit">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>150</y>
+     <width>181</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>15</pointsize>
+    </font>
+   </property>
+   <property name="html">
+    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:15pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt;当前机器人状态:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
  </widget>
