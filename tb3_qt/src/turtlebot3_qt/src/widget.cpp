@@ -3,12 +3,19 @@
 #include <QMetaObject>
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
-    , ui(new Ui::Widget)
+    , ui(new Ui::Widget),
+    mutex_()
 {
     ui->setupUi(this);
+
+    // 将check_tb3_node_label设置为圆形
+    ui->check_tb3_node_label->setFixedSize(21, 21);
+    ui->check_tb3_node_label->setStyleSheet("border-radius: 50px;");
+
     int argc = 0; char **argv = NULL;
     rclcpp::init(argc, argv);
-    node = rclcpp::Node::make_shared("turtlebot3_node");
+    node = rclcpp::Node::make_shared("ROS2_Node");
+
     vel_sub_ = node->create_subscription<geometry_msgs::msg::Twist>(
         "/cmd_vel",
         10,
@@ -21,6 +28,12 @@ Widget::Widget(QWidget *parent)
         std::bind(&Widget::odom_callback,this,std::placeholders::_1)
         );
 
+    // 机器人状态 -- 判断turtlebot3_node节点是否启动
+    heartbeat_sub_ = node->create_subscription<std_msgs::msg::Empty>(
+        "/heart_beat",
+        10,
+        std::bind(&Widget::heartbeat_callback,this,std::placeholders::_1)
+    );
 
 
     //多线程运行spin
@@ -28,11 +41,12 @@ Widget::Widget(QWidget *parent)
         rclcpp::spin(node);
     });
 
-
     // timer
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &Widget::update_time);
     timer->start(1000);
+
+    // rclcpp::shutdown();
 }
 
 Widget::~Widget()
@@ -41,11 +55,13 @@ Widget::~Widget()
     if (spin_thread.joinable()) {
         spin_thread.join();
     }
+
+
     delete ui;
 }
 
 void Widget::vel_callback(const geometry_msgs::msg::Twist::SharedPtr cmd_vel){
-    std::unique_lock<std::mutex> lock(mutex); // 确保互斥
+    std::unique_lock<std::mutex> lock(mutex_); // 确保互斥
     // 构建显示文本
     QString linear_text = QString::number(cmd_vel->linear.x,'f',3) + " m/s";
     QString angular_text = QString::number(cmd_vel->angular.z,'f',3) + " rad/s";
@@ -58,7 +74,7 @@ void Widget::vel_callback(const geometry_msgs::msg::Twist::SharedPtr cmd_vel){
 }
 
 void Widget::odom_callback(const nav_msgs::msg::Odometry::SharedPtr odom){
-    std::unique_lock<std::mutex> lock(mutex); // 确保互斥
+    std::unique_lock<std::mutex> lock(mutex_); // 确保互斥
     if(first_msg_){
         last_odometry_ = *odom;  // 如果是第一次接收，只存储数据
         first_msg_ = false;
@@ -79,6 +95,40 @@ void Widget::odom_callback(const nav_msgs::msg::Odometry::SharedPtr odom){
     QMetaObject::invokeMethod(ui->route_label, "setText", Qt::AutoConnection, Q_ARG(QString, route_text));
     return;
 }
+
+void Widget::heartbeat_callback(const std_msgs::msg::Empty &) {
+
+    std::unique_lock<std::mutex> lock(mutex_); // 确保互斥
+
+    last_heartbeat_ = node->now();  // 更新上次心跳的时间
+
+    auto time_diff = (node->now() - last_heartbeat_).seconds();
+
+    if (time_diff > 3) {
+        // 如果超过3秒没有收到心跳信号,显示红色
+        QMetaObject::invokeMethod(
+            this,
+            [this]() {
+                ui->check_tb3_node_label->setStyleSheet("background-color: red;");
+            },
+            Qt::AutoConnection
+            );
+    } else {
+        // 收到显示绿色
+        QMetaObject::invokeMethod(
+            this,
+            [this]() {
+                ui->check_tb3_node_label->setStyleSheet("background-color: green;");
+            },
+            Qt::AutoConnection
+            );
+    }
+}
+
+
+
+
+
 
 void Widget::update_time(){
     QDateTime currentTime = QDateTime::currentDateTime();
