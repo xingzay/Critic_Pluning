@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1339</width>
-    <height>720</height>
+    <width>1240</width>
+    <height>690</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,10 +16,10 @@
   <widget class="QStackedWidget" name="stackedWidget">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>1021</width>
-     <height>681</height>
+     <x>0</x>
+     <y>0</y>
+     <width>951</width>
+     <height>671</height>
     </rect>
    </property>
    <property name="currentIndex">
@@ -29,8 +29,8 @@
     <widget class="QLabel" name="Mainwindows">
      <property name="geometry">
       <rect>
-       <x>430</x>
-       <y>30</y>
+       <x>340</x>
+       <y>10</y>
        <width>151</width>
        <height>31</height>
       </rect>
@@ -50,8 +50,8 @@
     <widget class="QLabel" name="laber">
      <property name="geometry">
       <rect>
-       <x>320</x>
-       <y>590</y>
+       <x>230</x>
+       <y>570</y>
        <width>81</width>
        <height>31</height>
       </rect>
@@ -71,8 +71,8 @@
     <widget class="QLabel" name="Linux">
      <property name="geometry">
       <rect>
-       <x>130</x>
-       <y>590</y>
+       <x>40</x>
+       <y>570</y>
        <width>81</width>
        <height>31</height>
       </rect>
@@ -92,8 +92,8 @@
     <widget class="QLabel" name="GPS">
      <property name="geometry">
       <rect>
-       <x>760</x>
-       <y>600</y>
+       <x>680</x>
+       <y>570</y>
        <width>81</width>
        <height>31</height>
       </rect>
@@ -113,8 +113,8 @@
     <widget class="QLabel" name="Wifi_4G">
      <property name="geometry">
       <rect>
-       <x>560</x>
-       <y>590</y>
+       <x>460</x>
+       <y>570</y>
        <width>81</width>
        <height>31</height>
       </rect>
@@ -134,8 +134,8 @@
     <widget class="QTextEdit" name="linear_textEdit">
      <property name="geometry">
       <rect>
-       <x>260</x>
-       <y>320</y>
+       <x>170</x>
+       <y>300</y>
        <width>181</width>
        <height>41</height>
       </rect>
@@ -159,54 +159,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <widget class="QLabel" name="linear_label">
      <property name="geometry">
       <rect>
-       <x>500</x>
-       <y>320</y>
-       <width>201</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>15</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>0</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QTextEdit" name="volts_textEdit">
-     <property name="geometry">
-      <rect>
-       <x>260</x>
-       <y>400</y>
-       <width>181</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>15</pointsize>
-      </font>
-     </property>
-     <property name="html">
-      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-hr { height: 1px; border-width: 0; }
-li.unchecked::marker { content: &quot;\2610&quot;; }
-li.checked::marker { content: &quot;\2612&quot;; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:15pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt;电 池 电 压:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="volts_label">
-     <property name="geometry">
-      <rect>
-       <x>500</x>
-       <y>400</y>
+       <x>410</x>
+       <y>300</y>
        <width>201</width>
        <height>51</height>
       </rect>
@@ -226,19 +180,19 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <widget class="QLabel" name="check_tb3_node_label">
      <property name="geometry">
       <rect>
-       <x>590</x>
-       <y>260</y>
+       <x>500</x>
+       <y>240</y>
        <width>21</width>
        <height>21</height>
       </rect>
      </property>
      <property name="font">
       <font>
-       <pointsize>15</pointsize>
+       <pointsize>5</pointsize>
       </font>
      </property>
      <property name="text">
-      <string/>
+      <string>.</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -247,8 +201,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <widget class="QTextEdit" name="check_tb3_textEdit">
      <property name="geometry">
       <rect>
-       <x>260</x>
-       <y>250</y>
+       <x>170</x>
+       <y>230</y>
        <width>181</width>
        <height>41</height>
       </rect>
@@ -272,8 +226,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <widget class="QPushButton" name="close">
      <property name="geometry">
       <rect>
-       <x>440</x>
-       <y>120</y>
+       <x>350</x>
+       <y>100</y>
        <width>101</width>
        <height>81</height>
       </rect>
@@ -294,19 +248,19 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <widget class="QLabel" name="check_scan_node_label">
      <property name="geometry">
       <rect>
-       <x>450</x>
-       <y>600</y>
+       <x>360</x>
+       <y>580</y>
        <width>21</width>
        <height>21</height>
       </rect>
      </property>
      <property name="font">
       <font>
-       <pointsize>15</pointsize>
+       <pointsize>5</pointsize>
       </font>
      </property>
      <property name="text">
-      <string>ssd</string>
+      <string>.</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -315,19 +269,19 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <widget class="QLabel" name="check_robot_label">
      <property name="geometry">
       <rect>
-       <x>240</x>
-       <y>600</y>
+       <x>150</x>
+       <y>580</y>
        <width>21</width>
        <height>21</height>
       </rect>
      </property>
      <property name="font">
       <font>
-       <pointsize>15</pointsize>
+       <pointsize>5</pointsize>
       </font>
      </property>
      <property name="text">
-      <string>ssd</string>
+      <string>.</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -336,8 +290,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <widget class="QLabel" name="check_4G_label">
      <property name="geometry">
       <rect>
-       <x>680</x>
-       <y>600</y>
+       <x>600</x>
+       <y>580</y>
        <width>21</width>
        <height>21</height>
       </rect>
@@ -357,8 +311,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <widget class="QLabel" name="check_GPS_label">
      <property name="geometry">
       <rect>
-       <x>900</x>
-       <y>600</y>
+       <x>810</x>
+       <y>580</y>
        <width>21</width>
        <height>21</height>
       </rect>
@@ -378,8 +332,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <widget class="QTextEdit" name="angular_textEdit">
      <property name="geometry">
       <rect>
-       <x>260</x>
-       <y>480</y>
+       <x>170</x>
+       <y>460</y>
        <width>181</width>
        <height>41</height>
       </rect>
@@ -403,8 +357,54 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <widget class="QLabel" name="angular_label">
      <property name="geometry">
       <rect>
-       <x>500</x>
-       <y>470</y>
+       <x>410</x>
+       <y>450</y>
+       <width>201</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>15</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>0</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QTextEdit" name="route_textEdit">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>380</y>
+       <width>181</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>15</pointsize>
+      </font>
+     </property>
+     <property name="html">
+      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:15pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt;当前总里程:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="route_label">
+     <property name="geometry">
+      <rect>
+       <x>410</x>
+       <y>380</y>
        <width>201</width>
        <height>51</height>
       </rect>
@@ -428,7 +428,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
       <rect>
        <x>390</x>
        <y>30</y>
-       <width>151</width>
+       <width>181</width>
        <height>31</height>
       </rect>
      </property>
@@ -438,11 +438,122 @@ li.checked::marker { content: &quot;\2612&quot;; }
       </font>
      </property>
      <property name="text">
-      <string>定时任务</string>
+      <string>激光雷达信息</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
      </property>
+    </widget>
+    <widget class="QTableWidget" name="laser_tableWidget">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>90</y>
+       <width>771</width>
+       <height>541</height>
+      </rect>
+     </property>
+     <attribute name="horizontalHeaderDefaultSectionSize">
+      <number>191</number>
+     </attribute>
+     <attribute name="verticalHeaderDefaultSectionSize">
+      <number>34</number>
+     </attribute>
+     <row>
+      <property name="text">
+       <string/>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string/>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string/>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string/>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string/>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string/>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string/>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string/>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string/>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string/>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string/>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string/>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string/>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string/>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string/>
+      </property>
+     </row>
+     <column>
+      <property name="text">
+       <string>序号</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>距离</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>激光强度</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>坐标</string>
+      </property>
+     </column>
     </widget>
    </widget>
    <widget class="QWidget" name="page_6">
@@ -527,8 +638,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <widget class="QLabel" name="Mainwindows_3">
      <property name="geometry">
       <rect>
-       <x>350</x>
-       <y>30</y>
+       <x>340</x>
+       <y>10</y>
        <width>151</width>
        <height>31</height>
       </rect>
@@ -548,8 +659,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <widget class="QPushButton" name="Clear">
      <property name="geometry">
       <rect>
-       <x>90</x>
-       <y>630</y>
+       <x>80</x>
+       <y>610</y>
        <width>91</width>
        <height>41</height>
       </rect>
@@ -566,8 +677,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <widget class="QPushButton" name="user_param_4">
      <property name="geometry">
       <rect>
-       <x>820</x>
-       <y>500</y>
+       <x>810</x>
+       <y>480</y>
        <width>141</width>
        <height>43</height>
       </rect>
@@ -584,8 +695,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <widget class="QPushButton" name="user_param_6">
      <property name="geometry">
       <rect>
-       <x>820</x>
-       <y>560</y>
+       <x>810</x>
+       <y>540</y>
        <width>141</width>
        <height>43</height>
       </rect>
@@ -602,8 +713,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <widget class="QPushButton" name="Clean">
      <property name="geometry">
       <rect>
-       <x>820</x>
-       <y>440</y>
+       <x>810</x>
+       <y>420</y>
        <width>141</width>
        <height>43</height>
       </rect>
@@ -620,8 +731,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <widget class="QLabel" name="Mainwindows_4">
      <property name="geometry">
       <rect>
-       <x>830</x>
-       <y>630</y>
+       <x>820</x>
+       <y>610</y>
        <width>51</width>
        <height>31</height>
       </rect>
@@ -638,8 +749,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <widget class="QWidget" name="layoutWidget_3">
      <property name="geometry">
       <rect>
-       <x>400</x>
-       <y>630</y>
+       <x>390</x>
+       <y>610</y>
        <width>221</width>
        <height>39</height>
       </rect>
@@ -649,54 +760,13 @@ li.checked::marker { content: &quot;\2612&quot;; }
        <pointsize>14</pointsize>
       </font>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <item>
-       <widget class="QLabel" name="mode_3">
-        <property name="font">
-         <font>
-          <pointsize>14</pointsize>
-          <kerning>true</kerning>
-         </font>
-        </property>
-        <property name="text">
-         <string>最新：</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="Work_3">
-        <property name="font">
-         <font>
-          <pointsize>14</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>ON</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="Build_3">
-        <property name="font">
-         <font>
-          <pointsize>14</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>OFF</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
+     <layout class="QHBoxLayout" name="horizontalLayout_2"/>
     </widget>
     <widget class="QTableWidget" name="tableWidget">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>80</y>
+       <x>20</x>
+       <y>60</y>
        <width>771</width>
        <height>541</height>
       </rect>
@@ -806,8 +876,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <widget class="QLabel" name="Mainwindows_5">
      <property name="geometry">
       <rect>
-       <x>680</x>
-       <y>630</y>
+       <x>670</x>
+       <y>610</y>
        <width>61</width>
        <height>31</height>
       </rect>
@@ -824,15 +894,73 @@ li.checked::marker { content: &quot;\2612&quot;; }
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
+    <widget class="QRadioButton" name="Build_3">
+     <property name="geometry">
+      <rect>
+       <x>541</x>
+       <y>615</y>
+       <width>69</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>OFF</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="Work_3">
+     <property name="geometry">
+      <rect>
+       <x>466</x>
+       <y>615</y>
+       <width>69</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>ON</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="mode_3">
+     <property name="geometry">
+      <rect>
+       <x>391</x>
+       <y>611</y>
+       <width>69</width>
+       <height>37</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+       <kerning>true</kerning>
+      </font>
+     </property>
+     <property name="text">
+      <string>最新：</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="page_4">
     <widget class="QWidget" name="layoutWidget_4">
      <property name="geometry">
       <rect>
-       <x>50</x>
-       <y>80</y>
+       <x>40</x>
+       <y>90</y>
        <width>211</width>
-       <height>601</height>
+       <height>551</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -933,22 +1061,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="route_textEdit">
-        <property name="font">
-         <font>
-          <pointsize>14</pointsize>
-          <kerning>true</kerning>
-         </font>
-        </property>
-        <property name="text">
-         <string>工作总里程          ：</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QLabel" name="mode_29">
         <property name="font">
          <font>
@@ -1013,32 +1125,11 @@ li.checked::marker { content: &quot;\2612&quot;; }
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
-    <widget class="QLabel" name="route_label">
-     <property name="geometry">
-      <rect>
-       <x>310</x>
-       <y>490</y>
-       <width>201</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>15</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>0</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
     <widget class="QLabel" name="volts_label_2">
      <property name="geometry">
       <rect>
        <x>300</x>
-       <y>220</y>
+       <y>240</y>
        <width>201</width>
        <height>51</height>
       </rect>
@@ -1098,14 +1189,14 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <widget class="QStackedWidget" name="stackedWidget_2">
      <property name="geometry">
       <rect>
-       <x>50</x>
-       <y>90</y>
-       <width>781</width>
-       <height>571</height>
+       <x>60</x>
+       <y>60</y>
+       <width>841</width>
+       <height>601</height>
       </rect>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page_9">
       <widget class="QWidget" name="layoutWidget_5">
@@ -1762,40 +1853,40 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <string>避障设置</string>
        </property>
       </widget>
+      <widget class="QWidget" name="layoutWidget_7">
+       <property name="geometry">
+        <rect>
+         <x>660</x>
+         <y>500</y>
+         <width>151</width>
+         <height>74</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_8">
+        <item>
+         <widget class="Line" name="line_3">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="last">
+          <property name="text">
+           <string>上一页</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="next">
+          <property name="text">
+           <string>下一页</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
-    </widget>
-    <widget class="QWidget" name="layoutWidget_7">
-     <property name="geometry">
-      <rect>
-       <x>860</x>
-       <y>590</y>
-       <width>101</width>
-       <height>74</height>
-      </rect>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_8">
-      <item>
-       <widget class="Line" name="line_3">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="last">
-        <property name="text">
-         <string>上一页</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="next">
-        <property name="text">
-         <string>下一页</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
     </widget>
    </widget>
    <widget class="QWidget" name="page_8">
@@ -1843,8 +1934,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
   <widget class="QLabel" name="update_time">
    <property name="geometry">
     <rect>
-     <x>1100</x>
-     <y>70</y>
+     <x>1000</x>
+     <y>30</y>
      <width>201</width>
      <height>25</height>
     </rect>
@@ -1868,8 +1959,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
   <widget class="Line" name="line_2">
    <property name="geometry">
     <rect>
-     <x>1020</x>
-     <y>-10</y>
+     <x>950</x>
+     <y>-20</y>
      <width>31</width>
      <height>701</height>
     </rect>
@@ -1881,8 +1972,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>1080</x>
-     <y>120</y>
+     <x>980</x>
+     <y>80</y>
      <width>231</width>
      <height>551</height>
     </rect>
@@ -1908,7 +1999,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
        </font>
       </property>
       <property name="text">
-       <string>定时任务</string>
+       <string>激光雷达信息</string>
       </property>
      </widget>
     </item>
@@ -1996,12 +2087,12 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>500</x>
-     <y>170</y>
+     <x>400</x>
+     <y>140</y>
     </hint>
     <hint type="destinationlabel">
-     <x>669</x>
-     <y>359</y>
+     <x>619</x>
+     <y>344</y>
     </hint>
    </hints>
   </connection>

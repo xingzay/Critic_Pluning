@@ -9,27 +9,37 @@
 #include <mutex>
 #include <QTimer>
 #include <QDateTime>
+#include <QProcess>
 #include <std_msgs/msg/empty.hpp>
-#include "log_in.h"
+#include <sensor_msgs/msg/laser_scan.hpp>
+using std::placeholders::_1;
+
 namespace Ui {
 class Widget;
 }
-
+struct Point
+{
+    long index;
+    float range;
+    float intensity;
+    float x;
+    float y;
+};
 class Widget : public QWidget
 {
     Q_OBJECT
 
 public:
     explicit Widget(QWidget *parent = nullptr);
-
+    rclcpp::Node::SharedPtr node;
     ~Widget();
-    void updateGUI();
+
 private:
     Ui::Widget *ui;
-    LOG_IN * log_in;
-    rclcpp::Node::SharedPtr node;
+
     std::thread spin_thread; //多线程对象
     std::mutex mutex_; //互斥锁
+
     // 速度数据
     rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr vel_sub_;
     void vel_callback(const geometry_msgs::msg::Twist::SharedPtr cmd_vel);
@@ -43,10 +53,20 @@ private:
 
     // 判断turtlebot3_node节点是否启动
     rclcpp::Subscription<std_msgs::msg::Empty>::SharedPtr heartbeat_sub_;
-    void heartbeat_callback(const std_msgs::msg::Empty &);
+    void heartbeat_callback(const std_msgs::msg::Empty&);
     QTimer* timer_;
     rclcpp::Time last_heartbeat_;
     void check_heartbeat();
+
+    // 判断激光雷达是否启动
+    rclcpp::Subscription<sensor_msgs::msg::LaserScan>::SharedPtr laser_scan_sub_;
+    void check_scan_topic(const sensor_msgs::msg::LaserScan & scan);
+    Point findMax(const sensor_msgs::msg::LaserScan& scan);
+    void updateGUI();
+
+signals:
+    void dataReady(int index, float range, float intensity, float x, float y);
+
 
 private slots:
 
@@ -73,8 +93,10 @@ private slots:
     void on_next_clicked();
 
     void update_time();
+
     void on_robot_introduction_clicked();
-    void switchTointerfaces(int num);
+
+    void updateLaserTable(int index, float range, float intensity, float x, float y);
 };
 
 #endif // WIDGET_H

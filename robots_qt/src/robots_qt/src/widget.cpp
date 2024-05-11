@@ -10,55 +10,57 @@ Widget::Widget(QWidget *parent)
 {
     ui->setupUi(this);
 
-    // // 连接信号和私有槽
-    LOG_IN *login = new LOG_IN(this); // Widget是LOG_IN的父组件。当Widget销毁时，Qt会自动销毁所有子组件，不用delete
-    login->hide();  // 隐藏登录界面，直到需要显示为止
+    // 将check_tb3_node_label以及check_robot_label默认背景颜色为红色
 
-    // 连接信号到Widget中的槽函数
-    connect(login, &LOG_IN::loginSuccess, this, &Widget::switchTointerfaces);
-    connect(login, &LOG_IN::showLogin, this, &Widget::show);
+    ui->check_tb3_node_label->setStyleSheet("background-color: red;");
+    ui->check_robot_label->setStyleSheet("background-color: red;");
 
-    // 将check_tb3_node_label设置为圆形,默认颜色为红色
-    ui->check_tb3_node_label->setFixedSize(21, 21);
-    ui->check_tb3_node_label->setStyleSheet("border-radius: 50px; background-color: red;");
+    ui->check_scan_node_label->setStyleSheet("background-color: red;");
+
+    // 改变表格大小
+    connect(this, &Widget::dataReady, this, &Widget::updateLaserTable);
+
 
     int argc = 0; char **argv = NULL;
     rclcpp::init(argc, argv);
-    node = rclcpp::Node::make_shared("ROS2_Node");
+    node = rclcpp::Node::make_shared("ROS2_Node_QT");
 
     vel_sub_ = node->create_subscription<geometry_msgs::msg::Twist>(
         "/cmd_vel",
         10,
-        std::bind(&Widget::vel_callback,this,std::placeholders::_1));
+        std::bind(&Widget::vel_callback,this,_1));
     // 路程 -- 里程计信息
     odom_sub_ = node->create_subscription<nav_msgs::msg::Odometry>(
         // "/odometry/filtered",
         "/odom",
         10,
-        std::bind(&Widget::odom_callback,this,std::placeholders::_1)
+        std::bind(&Widget::odom_callback,this,_1)
         );
 
     // 机器人状态 -- 判断turtlebot3_node节点是否启动
     heartbeat_sub_ = node->create_subscription<std_msgs::msg::Empty>(
         "/heart_beat",
         10,
-        std::bind(&Widget::heartbeat_callback,this,std::placeholders::_1)
+        std::bind(&Widget::heartbeat_callback,this,_1)
         );
+    // 激光雷达 -- 判断是否订阅到/scan话题
+    laser_scan_sub_ = node->create_subscription<sensor_msgs::msg::LaserScan>(
+        "/scan",
+        10,
+        std::bind(&Widget::check_scan_topic,this,_1)
+    );
 
     // 创建定时器，用于检查心跳信号是否超时
     timer_ = new QTimer(this);
     connect(timer_, &QTimer::timeout, this, &Widget::check_heartbeat);
-    timer_->start(2000);  // 每2秒检查一次  时间短计算量大
+    connect(timer_, &QTimer::timeout, this, &Widget::update_time);
+    timer_->start(1000);
 
     //多线程运行spin
     spin_thread = std::thread([this]() {
         rclcpp::spin(node);
     });
 
-    // timer
-    QTimer *timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, this, &Widget::update_time);
-    timer->start(1000);
 }
 
 Widget::~Widget()
@@ -74,15 +76,12 @@ Widget::~Widget()
     rclcpp::shutdown();
     delete ui;
 }
-
 void Widget::updateGUI(){
     return;
 }
-
-
-
+// 显示速度
 void Widget::vel_callback(const geometry_msgs::msg::Twist::SharedPtr cmd_vel){
-    std::unique_lock<std::mutex> lock(mutex_); // 确保互斥
+    std::lock_guard<std::mutex> lock(mutex_); // 确保互斥
     // 构建显示文本
     QString linear_text = QString::number(cmd_vel->linear.x,'f',3) + " m/s";
     QString angular_text = QString::number(cmd_vel->angular.z,'f',3) + " rad/s";
@@ -91,11 +90,11 @@ void Widget::vel_callback(const geometry_msgs::msg::Twist::SharedPtr cmd_vel){
     QMetaObject::invokeMethod(ui->linear_label, "setText", Qt::AutoConnection, Q_ARG(QString, linear_text));
     ui->angular_label->setText(angular_text);
     QMetaObject::invokeMethod(ui->angular_label, "setText", Qt::AutoConnection, Q_ARG(QString, angular_text));
-    return;
 }
 
+// 显示总路程
 void Widget::odom_callback(const nav_msgs::msg::Odometry::SharedPtr odom){
-    std::unique_lock<std::mutex> lock(mutex_); // 确保互斥
+    std::lock_guard<std::mutex> lock(mutex_); // 确保互斥
     if(first_msg_){
         last_odometry_ = *odom;  // 如果是第一次接收，只存储数据
         first_msg_ = false;
@@ -109,22 +108,22 @@ void Widget::odom_callback(const nav_msgs::msg::Odometry::SharedPtr odom){
         total_distance_ += distance;  // 累加总距离
         last_odometry_ = *odom;  // 更新上一次的里程计数据
     }
-
     // 利用里程计数据，计算小车走过的总路程
     QString route_text = QString::number(total_distance_,'f',3) + "  m";
     ui->route_label->setText(route_text);
     QMetaObject::invokeMethod(ui->route_label, "setText", Qt::AutoConnection, Q_ARG(QString, route_text));
-    return;
 }
 
-void Widget::heartbeat_callback(const std_msgs::msg::Empty &) {
-    std::unique_lock<std::mutex> lock(mutex_); // 确保互斥
+// 检测turtlebot3_node
+void Widget::heartbeat_callback(const std_msgs::msg::Empty& ) {
+    std::lock_guard<std::mutex> lock(mutex_); // 确保互斥
     last_heartbeat_ = rclcpp::Clock().now();  // 更新心跳时间
     // 收到心跳信号后，将颜色更改为绿色
     QMetaObject::invokeMethod(
         this,
         [this]() {
             ui->check_tb3_node_label->setStyleSheet("background-color: green;");
+            ui->check_robot_label->setStyleSheet("background-color: green;");
         },
         Qt::AutoConnection
         );
@@ -140,11 +139,56 @@ void Widget::check_heartbeat() {
             this,
             [this]() {
                 ui->check_tb3_node_label->setStyleSheet("background-color: red;");
+                ui->check_robot_label->setStyleSheet("background-color: red;");
+                ui->check_scan_node_label->setStyleSheet("background-color: red;");
             },
             Qt::AutoConnection
             );
     }
 }
+
+void Widget::check_scan_topic(const sensor_msgs::msg::LaserScan & scan){
+    std::lock_guard<std::mutex> lock(mutex_);  // 确保线程安全
+    // 显示绿色 发布激光强度（频率要慢）
+    ui->check_scan_node_label->setStyleSheet("background-color: green;");
+    for (int i = 0; i < 15; i++){
+        auto max = findMax(scan);
+        emit dataReady(i, max.range, max.intensity, max.x, max.y);  // 发射信号
+        // std::cout << "激光最大数据:"
+        //           << " 距离:" << max.range << " 强度:" << max.intensity
+        //           << "坐标: (" << max.x << ", " << max.y << ")" << std::endl;
+    }
+    return ;
+}
+
+void Widget::updateLaserTable(int index, float range, float intensity, float x, float y) {
+    // setItem(行row，列column，内容)
+    ui->laser_tableWidget->setItem(index, 0, new QTableWidgetItem(QString::number(index)));
+    ui->laser_tableWidget->setItem(index, 1, new QTableWidgetItem(QString::number(range)));
+    ui->laser_tableWidget->setItem(index, 2, new QTableWidgetItem(QString::number(intensity)));
+    ui->laser_tableWidget->setItem(index, 3, new QTableWidgetItem(QString("(%1, %2)").arg(x).arg(y)));
+}
+
+Point Widget::findMax(const sensor_msgs::msg::LaserScan& scan)
+{
+    Point max{0, 0.0, 0.0, 0.0, 0.0};
+    for (std::vector<float>::size_type i = 0; i < scan.ranges.size(); i++)
+    {
+        double intensity = scan.intensities[i];
+        if (intensity > max.intensity)
+        {
+            max.index = i;
+            max.range = scan.ranges[i];
+            max.intensity = intensity;
+            // 角度转弧度
+            double angle = scan.angle_min + scan.angle_increment * max.index;
+            max.x = max.range * std::cos(angle);
+            max.y = max.range * std::sin(angle);
+        }
+    }
+    return max;
+}
+
 
 //主界面
 void Widget::on_MainWindow_clicked()
@@ -167,12 +211,12 @@ void Widget::on_Error_clicked()
     int initialRowCount = 15;
     ui->tableWidget->setRowCount(initialRowCount);
 
-    for (int i = 0; i < initialRowCount; ++i) {
-        for (int j = 0; j < ui->tableWidget->columnCount(); ++j) {
-            QTableWidgetItem *item = new QTableWidgetItem("Data");
-            ui->tableWidget->setItem(i, j, item);
-        }
-    }
+    // for (int i = 0; i < initialRowCount; ++i) {
+    //     for (int j = 0; j < ui->tableWidget->columnCount(); ++j) {
+    //         QTableWidgetItem *item = new QTableWidgetItem("Data");
+    //         ui->tableWidget->setItem(i, j, item);
+    //     }
+    // }
     ui->stackedWidget->setCurrentIndex(3);
 }
 
@@ -233,27 +277,16 @@ void Widget::on_Condition_clicked()
 //用户参数登录界面
 void Widget::on_user_param_clicked()
 {
-    this->close();
-    log_in->switchToPage(1);
-    log_in->show();
+    //进入用户参数界面
+    ui->stackedWidget->setCurrentIndex(5);
+    // this->show();
 }
 //系统参数登录界面
 void Widget::on_system_param_clicked()
 {
-    //第二个登录界面
-    this->close();
-    log_in->switchToPage(2);
-    log_in->show();
-}
-void Widget::switchTointerfaces(int num){
-    if(num == 1){
-        //进入用户参数界面
-        ui->stackedWidget->setCurrentIndex(5);
-
-    }else if (num ==2){
-        //进入系统参数界面
-        ui->stackedWidget->setCurrentIndex(6);
-    }
+    //进入系统参数界面
+    ui->stackedWidget->setCurrentIndex(6);
+    // this->show();
 }
 
 void Widget::on_last_clicked()
@@ -281,4 +314,5 @@ void Widget::update_time(){
     QString timeString = currentTime.toString("yyyy-MM-dd hh:mm:ss");
     ui->update_time->setText(timeString);
 }
+
 
