@@ -92,7 +92,7 @@ void Widget::vel_callback(const geometry_msgs::msg::Twist::SharedPtr cmd_vel){
     QMetaObject::invokeMethod(ui->angular_label, "setText", Qt::AutoConnection, Q_ARG(QString, angular_text));
 }
 
-// 显示总路程
+// 显示总路程以及当前位置
 void Widget::odom_callback(const nav_msgs::msg::Odometry::SharedPtr odom){
     std::lock_guard<std::mutex> lock(mutex_); // 确保互斥
     if(first_msg_){
@@ -112,6 +112,12 @@ void Widget::odom_callback(const nav_msgs::msg::Odometry::SharedPtr odom){
     QString route_text = QString::number(total_distance_,'f',3) + "  m";
     ui->route_label->setText(route_text);
     QMetaObject::invokeMethod(ui->route_label, "setText", Qt::AutoConnection, Q_ARG(QString, route_text));
+
+    QString position_text =
+        QString("(%1, %2)").arg(QString::number(odom->pose.pose.position.x, 'f', 2)).
+                            arg(QString::number(odom->pose.pose.position.y, 'f', 2));
+    ui->robot_position_label->setText(position_text);
+
 }
 
 // 检测turtlebot3_node
@@ -195,16 +201,13 @@ void Widget::on_MainWindow_clicked()
 {
     ui->stackedWidget->setCurrentIndex(0);
 }
-//定时任务
+
+//激光雷达信息界面
 void Widget::on_Time_Work_clicked()
 {
     ui->stackedWidget->setCurrentIndex(1);
 }
-//调试界面
-void Widget::on_Test_Window_clicked()
-{
-    ui->stackedWidget->setCurrentIndex(2);
-}
+
 //报警信息界面
 void Widget::on_Error_clicked()
 {
@@ -217,7 +220,7 @@ void Widget::on_Error_clicked()
     //         ui->tableWidget->setItem(i, j, item);
     //     }
     // }
-    ui->stackedWidget->setCurrentIndex(3);
+    ui->stackedWidget->setCurrentIndex(2);
 }
 
 void Widget::on_Clear_clicked()
@@ -272,20 +275,20 @@ void Widget::on_Clean_clicked()
 //状态监测
 void Widget::on_Condition_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(4);
+    ui->stackedWidget->setCurrentIndex(3);
 }
 //用户参数登录界面
 void Widget::on_user_param_clicked()
 {
     //进入用户参数界面
-    ui->stackedWidget->setCurrentIndex(5);
+    ui->stackedWidget->setCurrentIndex(4);
     // this->show();
 }
 //系统参数登录界面
 void Widget::on_system_param_clicked()
 {
     //进入系统参数界面
-    ui->stackedWidget->setCurrentIndex(6);
+    ui->stackedWidget->setCurrentIndex(5);
     // this->show();
 }
 
@@ -305,7 +308,7 @@ void Widget::on_next_clicked()
 //机器人介绍界面
 void Widget::on_robot_introduction_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(7);
+    ui->stackedWidget->setCurrentIndex(6);
 }
 
 
