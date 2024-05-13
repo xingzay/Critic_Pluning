@@ -72,8 +72,6 @@ private slots:
 
     void on_MainWindow_clicked();
 
-    void on_Test_Window_clicked();
-
     void on_Clear_clicked();
 
     void on_Clean_clicked();
